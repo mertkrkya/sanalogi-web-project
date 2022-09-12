@@ -6,10 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Sanalogi.API.StartupExtensions;
+using Siparis.API.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UrunKatalogProjesi.API.StartupExtensions;
 
 namespace Sanalogi.API
 {
@@ -25,7 +28,10 @@ namespace Sanalogi.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers(options => options.Filters.Add(new ValidateFilter()));
+            services.AddContextDependencyInjection(Configuration);
+            services.AddServicesDependencyInjection();
+            services.AddValidations();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
