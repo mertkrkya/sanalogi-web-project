@@ -20,7 +20,7 @@ namespace Sanalogi.Service.Validations
             RuleFor(r => r.Tutar)
                 .InclusiveBetween(1, decimal.MaxValue).WithMessage($"Tutar 1 ila {decimal.MaxValue} arasında olmalıdır.");
             RuleFor(r => r.SiparisTarihi)
-                .GreaterThan(DateTime.Now).WithMessage("Sipariş tarihi bugünün tarihinden büyük olamaz.");
+                .LessThan(DateTime.Now).WithMessage("Sipariş tarihi bugünün tarihinden büyük olamaz.");
         }
     }
 }

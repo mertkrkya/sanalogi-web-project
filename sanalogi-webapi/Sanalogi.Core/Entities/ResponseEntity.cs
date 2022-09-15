@@ -7,7 +7,7 @@ namespace Sanalogi.Core.Entities
 {
     public class ResponseEntity
     {
-        private bool isSuccess { get; set; }
+        public bool isSuccess { get; private set; }
         public string errorMessage { get; set; }
         public object data { get; set; }
         public ResponseEntity(object data)

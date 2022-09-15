@@ -9,6 +9,7 @@ namespace Sanalogi.Service.Mapper
         public MappingProfile()
         {
             CreateMap<Siparis, SiparisDto>().ReverseMap();
+            CreateMap<Siparis, SiparisDetailDto>().ReverseMap();
         }
     }
 }

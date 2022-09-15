@@ -5,7 +5,7 @@ using Sanalogi.Service.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace UrunKatalogProjesi.API.StartupExtensions
+namespace Sanalogi.API.StartupExtensions
 {
     public static class ExtensionValidations
     {

@@ -10,20 +10,18 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace UrunKatalogProjesi.Service.Services
+namespace Sanalogi.Service.Services
 {
     public class BaseService<Dto,TEntity> : IBaseService<Dto, TEntity> where TEntity : class
     {
         private readonly IBaseRepository<TEntity> _repository;
         private readonly IUnitofWork _unitofWork;
         protected readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public BaseService(IBaseRepository<TEntity> repository, IUnitofWork unitofWork, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base()
+        public BaseService(IBaseRepository<TEntity> repository, IUnitofWork unitofWork, IMapper mapper) : base()
         {
             _repository = repository;
             _unitofWork = unitofWork;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
         }
         public virtual async Task<ResponseEntity> GetAllAsync()
         {
@@ -58,8 +56,7 @@ namespace UrunKatalogProjesi.Service.Services
             try
             {
                 var tempEntity = _mapper.Map<Dto, TEntity>(entity);
-                var currentUser = _httpContextAccessor.HttpContext.User;
-                var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userId = "0";
                 var property = tempEntity.GetType().GetProperty("CreatedBy");
                 if (property != null)
                     property.SetValue(tempEntity, userId, null);
@@ -80,11 +77,10 @@ namespace UrunKatalogProjesi.Service.Services
                 var unUpdatedEntity = await _repository.GetByIdAsync(id);
                 if (unUpdatedEntity == null)
                 {
-                    throw new ClientException("No Data");
+                    return new ResponseEntity("No Data. ID: "+ id);
                 }
                 var tempEntity = _mapper.Map<Dto, TEntity>(entity);
-                var currentUser = _httpContextAccessor.HttpContext.User;
-                var userId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var userId = "0";
                 tempEntity.GetType().GetProperty("Id").SetValue(tempEntity, id);
                 var tempProperty = unUpdatedEntity.GetType().GetProperty("CreatedBy");
                 var tempPropertyDate = unUpdatedEntity.GetType().GetProperty("CreatedDate");
@@ -117,7 +113,7 @@ namespace UrunKatalogProjesi.Service.Services
                 var deleteEntity = await _repository.GetByIdAsync(id);
                 if (deleteEntity == null)
                 {
-                    throw new ClientException("No Data");
+                    return new ResponseEntity("No Data. ID: " + id);
                 }
                 _repository.Delete(deleteEntity);
                 _unitofWork.Commit();

@@ -12,7 +12,7 @@ namespace Siparis.API.Filters
             if(!context.ModelState.IsValid)
             {
                 var errors = context.ModelState.Values.SelectMany(r => r.Errors).Select(r => r.ErrorMessage).ToList();
-                context.Result = new BadRequestObjectResult(new ResponseEntity(errorMessage: errors.First())); //Burası düzeltilebilir.
+                context.Result = new BadRequestObjectResult(new ResponseEntity(errorMessage: errors.First()));
             }
         }
     }

@@ -16,7 +16,7 @@ using Sanalogi.Service.Services.Abstract;
 using Sanalogi.Service.Services.Concrete;
 using System;
 using System.Text;
-using UrunKatalogProjesi.Service.Services;
+using Sanalogi.Service.Services;
 
 namespace Sanalogi.API.StartupExtensions
 {
@@ -38,11 +38,11 @@ namespace Sanalogi.API.StartupExtensions
         }
         public static void AddServicesDependencyInjection(this IServiceCollection services)
         {
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
             services.AddScoped<ISiparisRepository, SiparisRepository>();
             services.AddScoped<ISiparisService, SiparisService>();
             services.AddScoped<IUnitofWork, UnitOfWork>();
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
             // mapper 
             MapperConfiguration mappingConfig = new MapperConfiguration(mc =>
             {

@@ -12,7 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UrunKatalogProjesi.API.StartupExtensions;
+using Sanalogi.API.StartupExtensions;
+using Sanalogi.API.Middleware;
 
 namespace Sanalogi.API
 {
@@ -42,6 +43,7 @@ namespace Sanalogi.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,9 +51,16 @@ namespace Sanalogi.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sanalogi.API v1"));
             }
 
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseMiddleware<RequestMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
