@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class SiparisComponent implements OnInit {
 
   addForm:FormGroup;
-  @Input() siparis:SiparisModel = null;
+  @Input() siparis:SiparisModel;
   constructor(
     private siparisService:SiparisService,
     private toastrService:ToastrService
@@ -44,6 +44,7 @@ export class SiparisComponent implements OnInit {
           {
             this.addForm.reset();
             this.toastrService.success("Sipariş başarılı bir şekilde oluşturulmuştur.");
+            this.createAddForm();
           }
           else{
             console.log(res)
@@ -57,6 +58,7 @@ export class SiparisComponent implements OnInit {
           {
             this.addForm.reset();
             this.toastrService.success("Sipariş başarılı bir şekilde güncellenmiştir.");
+            this.createAddForm();
           }
           else{
             Swal.fire("Hata","Sunucudan hata geldi.","error")
