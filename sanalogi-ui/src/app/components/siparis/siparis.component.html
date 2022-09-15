@@ -1,0 +1,41 @@
+<div class="container p-3">
+  <form action="" [formGroup]="addForm" (ngSubmit)="siparisKaydet()">
+  <div class="row">
+    <input type="text" type="hidden" formControlName="id" [ngModel]="siparis === undefined ? '' : siparis.id">
+    <div class="input-group-sm col-6">
+      <label class="form-label">Sipariş Veren Firma</label>
+      <input type="text" class="form-control" formControlName="SiparisVerenFirma" [ngModel]="siparis === undefined ? '' : siparis.siparisVerenFirma">
+      <p class="mt-1 text-danger" *ngIf="!addForm.get('SiparisVerenFirma').valid && addForm.get('SiparisVerenFirma').touched" formControlName="SiparisVerenFirma">Sipariş veren firma girilmelidir.</p>
+    </div>
+    <div class="input-group-sm col-6">
+      <label class="form-label">Sipariş Tarihi</label>
+      <input class="form-control" type="date" formControlName="SiparisTarihi" [ngModel]="siparis === undefined ? '' : siparis.siparisTarihi |date:'yyyy-MM-dd'">
+      <p class="mt-1 text-danger" *ngIf="!addForm.get('SiparisTarihi').valid && addForm.get('SiparisTarihi').touched">Sipariş tarihi seçilmelidir.</p>
+    </div>
+  </div>
+  <div class="row">
+      <div class="input-group-sm col-4">
+        <label class="form-label">Ürün Adı</label>
+        <input type="text" class="form-control" formControlName="UrunAdi" [ngModel]="siparis === undefined ? '' : siparis.urunAdi">
+        <p class="mt-1 text-danger" *ngIf="!addForm.get('UrunAdi').valid && addForm.get('UrunAdi').touched">Ürün adı girilmelidir.</p>
+      </div>
+      <div class="input-group-sm col-4">
+        <label class="form-label">Adet</label>
+        <input type="number" class="form-control" formControlName="Adet" [ngModel]="siparis === undefined ? '' : siparis.adet">
+        <p class="mt-1 text-danger" *ngIf="(addForm.get('Adet').value == null || addForm.get('Adet').value == 0) && addForm.get('Adet').touched">Adet girilmelidir.</p>
+        <p class="mt-1 text-danger" *ngIf="addForm.get('Adet').value < 0 && addForm.get('Adet').touched">Adet 0'dan küçük girilemez.</p>
+      </div>
+      <div class="input-group-sm col-4">
+        <label class="form-label">Tutar</label>
+        <input type="number" class="form-control" formControlName="Tutar" [ngModel]="siparis === undefined ? '' : siparis.tutar">
+        <p class="mt-1 text-danger" *ngIf="(addForm.get('Tutar').value == null || addForm.get('Tutar').value == 0) && addForm.get('Tutar').touched">Tutar girilmelidir.</p>
+        <p class="mt-1 text-danger" *ngIf="addForm.get('Tutar').value < 0 && addForm.get('Tutar').touched">Tutar 0'dan küçük girilemez.</p>
+      </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12 text-end">
+      <button type="submit" class="btn btn-outline-primary mx-auto">Kaydet</button>
+  </div>
+  </div>
+</form>
+</div>
